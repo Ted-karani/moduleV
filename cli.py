@@ -21,6 +21,19 @@ def get_one():
     response = requests.get("http://127.0.0.1:5000/inventory/" + id)
     print(response.json())
 
+def add_item():
+    name = input("Enter name: ")
+    brand = input("Enter brand: ")
+    price = input("Enter price: ")
+    stock = input("Enter stock: ")
+    response = requests.post("http://127.0.0.1:5000/inventory", json={
+        "name": name,
+        "brand": brand,
+        "price": float(price),
+        "stock": int(stock)
+    })
+    print(response.json())
+
 while True:
     show_menu()
     choice = input("Choose an option: ")
@@ -29,6 +42,8 @@ while True:
         get_all()
     elif choice == "2":
         get_one()    
+    elif choice == "3":
+        add_item()    
     elif choice == "7":    
         print("Goodbye tschuss")
         break
