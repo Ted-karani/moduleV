@@ -1,5 +1,8 @@
 so this is a plan of how ill wdo this
 remember to commit regulary and properly test each feature before emoving on to next one
+
+then we first use mock data then we switch up kater
+
 project plan
 building an inventory management system with flask
 
