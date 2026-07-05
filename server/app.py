@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -62,6 +63,51 @@ def delete_item(id):
         inventory.remove(item)
         return jsonify({"message": "Item its deleted"}), 200
     return jsonify({"error": "Item isnt found"}), 404
+
+#supposed to use barcode from the api, this is lowkey hard lemme chack canvas.
+
+@app.route("/fetch/<string:barcode>", methods=["GET"])
+def fetch_product(barcode):
+    url = f"https://world.openfoodfacts.org/api/v3/product/{barcode}.json"
+    response = requests.get(url,headers={"User-Agent": "InventoryApp/1.0"})
+    data = response.json()
+
+    if data["status"] == "failure":
+        return jsonify({"error": "Product not found"}), 404
+
+    product = data["product"]
+
+    result = {
+         "name": product["product_name"],
+         "brand": product["brands"],
+         "ingredients": product["ingredients_text"]
+    }
+
+    return jsonify(result), 200
+
+
+@app.route("/fetch/<string:barcode>/add", methods=["POST"])
+def fetch_and_add(barcode):
+    url = f"https://world.openfoodfacts.org/api/v3/product/{barcode}.json"
+    response = requests.get(url,headers={"User-Agent": "InventoryApp/1.0"})
+    data = response.json()
+
+    if data["status"] == "failure":
+        return jsonify({"error": "Product not found"}), 404
+
+    product = data["product"]
+
+    new_id = len(inventory) + 1
+    new_item = {
+         "id": new_id,
+         "name": product["product_name"],
+         "brand": product["brands"],
+         "price": 0.00,
+         "stock": 0
+    }
+
+    inventory.append(new_item)
+    return jsonify(new_item), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
