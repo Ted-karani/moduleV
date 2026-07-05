@@ -1,0 +1,29 @@
+so this is a plan of how ill wdo this
+remember to commit regulary and properly test each feature before emoving on to next one
+project plan
+building an inventory management system with flask
+
+what im doing
+- flask api with crud operations
+- connect to openfoodfacts api for real product data
+- cli tool to interact with the api from terminal
+- use git branches for each feature
+
+steps
+1. setup - project structure and install stuff like cors ive already done that
+2. crud routes - get, post, patch, delete for inventory
+3. external api - connect to openfoodfacts and fetch products
+4. cli - build the terminal interface
+
+file structure
+inventory-app/
+    server/app.py - flask backend
+    cli.py - terminal interface
+    README.md - project info
+    PLAN.md - this file
+
+notes
+- test each route in postman before moving on
+- commit after each feature
+- openfoodfacts api doesnt need an api key
+- keep it simple
