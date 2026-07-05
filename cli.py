@@ -16,12 +16,19 @@ def get_all():
     for item in items:
         print(f"ID: {item['id']} | Name: {item['name']} | Brand: {item['brand']} | Price: {item['price']} | Stock: {item['stock']}")
 
+def get_one():
+    id = input("Enter item ID: ")
+    response = requests.get("http://127.0.0.1:5000/inventory/" + id)
+    print(response.json())
+
 while True:
     show_menu()
     choice = input("Choose an option: ")
 
     if choice == "1":
         get_all()
+    elif choice == "2":
+        get_one()    
     elif choice == "7":    
         print("Goodbye tschuss")
         break
