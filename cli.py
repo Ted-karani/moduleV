@@ -34,6 +34,16 @@ def add_item():
     })
     print(response.json())
 
+def update_item():
+    id = input("Enter item ID to update: ")
+    price = input("Enter new price: ")
+    stock = input("Enter new stock: ")
+    response = requests.patch("http://127.0.0.1:5000/inventory/" + id, json={
+        "price": float(price),
+        "stock": int(stock)
+    })
+    print(response.json())
+
 while True:
     show_menu()
     choice = input("Choose an option: ")
@@ -43,7 +53,9 @@ while True:
     elif choice == "2":
         get_one()    
     elif choice == "3":
-        add_item()    
+        add_item() 
+    elif choice == "4":
+        update_item()       
     elif choice == "7":    
         print("Goodbye tschuss")
         break
