@@ -44,6 +44,20 @@ def update_item():
     })
     print(response.json())
 
+def delete_item():
+    id = input("Enter item ID to delete: ")
+    response = requests.delete("http://127.0.0.1:5000/inventory/" + id)
+    print(response.json())
+
+def fetch_product():
+    barcode = input("Enter barcode: ")
+    response = requests.get("http://127.0.0.1:5000/fetch/" + barcode)
+    print(response.json())
+    add = input("Add to inventory? (y/n): ")
+    if add == "y":
+        requests.post("http://127.0.0.1:5000/fetch/" + barcode + "/add")
+        print("Added to inventory!")
+
 while True:
     show_menu()
     choice = input("Choose an option: ")
@@ -55,7 +69,11 @@ while True:
     elif choice == "3":
         add_item() 
     elif choice == "4":
-        update_item()       
+        update_item()   
+    elif choice == "5":
+        delete_item()   
+    elif choice =="6":
+        fetch_product()         
     elif choice == "7":    
         print("Goodbye tschuss")
         break
